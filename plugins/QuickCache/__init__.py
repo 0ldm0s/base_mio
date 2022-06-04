@@ -9,18 +9,19 @@ from mio.util.Helper import get_root_path, read_txt_file
 
 
 class QuickCache(object):
-    VERSION = '0.10'
+    VERSION = '0.11'
+    redis_key: str
 
     def __init__(self, current_app: Optional[Flask] = None):
         # 如果在cli下使用，则需要显式的传入app
         if current_app is None:
             from flask import current_app
-        self.current_app = current_app
+        self.redis_key = current_app.config["REDIS_KEY_PREFIX"]
 
     def get_keys(self, key: str, is_full_key: bool = False) -> List[str]:
         console_log = LogHandler('QuickCache.get_keys')
         try:
-            redis_key: str = f'{self.current_app.config["REDIS_KEY_PREFIX"]}:Cache:{key}' if not is_full_key else key
+            redis_key: str = f'{self.redis_key}:Cache:{key}' if not is_full_key else key
             keys: Optional[List[bytes]] = redis_db.keys(redis_key)
             return [str(key, encoding='utf-8') for key in keys]
         except Exception as e:
@@ -31,7 +32,7 @@ class QuickCache(object):
         console_log = LogHandler('QuickCache.lpush')
         if key is None or len(key) <= 0:
             return False
-        redis_key: str = f'{self.current_app.config["REDIS_KEY_PREFIX"]}:Cache:{key}' if not is_full_key else key
+        redis_key: str = f'{self.redis_key}:Cache:{key}' if not is_full_key else key
         try:
             redis_db.lpush(redis_key, pickle.dumps(value))
             if expiry > 0:
@@ -44,7 +45,7 @@ class QuickCache(object):
         console_log = LogHandler('QuickCache.llen')
         if key is None or len(key) <= 0:
             return 0
-        redis_key: str = f'{self.current_app.config["REDIS_KEY_PREFIX"]}:Cache:{key}' if not is_full_key else key
+        redis_key: str = f'{self.redis_key}:Cache:{key}' if not is_full_key else key
         try:
             return redis_db.llen(redis_key)
         except Exception as e:
@@ -55,7 +56,7 @@ class QuickCache(object):
         console_log = LogHandler('QuickCache.inc_num')
         if key is None or len(key) <= 0:
             return None
-        redis_key: str = f'{self.current_app.config["REDIS_KEY_PREFIX"]}:Cache:{key}' if not is_full_key else key
+        redis_key: str = f'{self.redis_key}:Cache:{key}' if not is_full_key else key
         try:
             item = redis_db.incr(redis_key, num)
             return item
@@ -67,7 +68,7 @@ class QuickCache(object):
         console_log = LogHandler('QuickCache.dec_num')
         if key is None or len(key) <= 0:
             return None
-        redis_key: str = f'{self.current_app.config["REDIS_KEY_PREFIX"]}:Cache:{key}' if not is_full_key else key
+        redis_key: str = f'{self.redis_key}:Cache:{key}' if not is_full_key else key
         try:
             item = redis_db.decr(redis_key, num)
             return item
@@ -79,7 +80,7 @@ class QuickCache(object):
         console_log = LogHandler('QuickCache.llen')
         if key is None or len(key) <= 0:
             return None
-        redis_key: str = f'{self.current_app.config["REDIS_KEY_PREFIX"]}:Cache:{key}' if not is_full_key else key
+        redis_key: str = f'{self.redis_key}:Cache:{key}' if not is_full_key else key
         try:
             return pickle.loads(redis_db.rpop(redis_key))
         except Exception as e:
@@ -93,7 +94,7 @@ class QuickCache(object):
         console_log = LogHandler('QuickCache.cache')
         if key is None or len(key) <= 0:
             return False, None
-        redis_key: str = f'{self.current_app.config["REDIS_KEY_PREFIX"]}:Cache:{key}' if not is_full_key else key
+        redis_key: str = f'{self.redis_key}:Cache:{key}' if not is_full_key else key
         try:
             if value is None:
                 # 读取
@@ -122,7 +123,7 @@ class QuickCache(object):
         console_log = LogHandler('QuickCache.remove_cache')
         if key is None or len(key) <= 0:
             return
-        redis_key: str = f'{self.current_app.config["REDIS_KEY_PREFIX"]}:Cache:{key}' if not is_full_key else key
+        redis_key: str = f'{self.redis_key}:Cache:{key}' if not is_full_key else key
         try:
             redis_db.delete(redis_key)
         except Exception as e:
