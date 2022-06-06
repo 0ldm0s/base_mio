@@ -9,7 +9,7 @@ from mio.util.Helper import get_root_path, read_txt_file
 
 
 class QuickCache(object):
-    VERSION = '0.11'
+    VERSION = '0.12'
     redis_key: str
 
     def __init__(self, current_app: Optional[Flask] = None):
@@ -133,7 +133,7 @@ class QuickCache(object):
             self, key: str, template_filename: str, expiry: int = 3600, is_full_key: bool = False, **kwargs
     ) -> Optional[str]:
         from flask import render_template_string
-        redis_key: str = f'{self.current_app.config["REDIS_KEY_PREFIX"]}:Page:Cache:{key}' if not is_full_key else key
+        redis_key: str = f'{self.redis_key}:Page:Cache:{key}' if not is_full_key else key
         root_path: str = os.path.join(get_root_path(), 'web', 'template')
         template_filename = root_path + os.path.sep + template_filename
         if not os.path.isfile(template_filename):
@@ -145,7 +145,7 @@ class QuickCache(object):
         return text
 
     def read_page(self, key: str, expiry: int = 3600, is_full_key: bool = False) -> Optional[str]:
-        redis_key: str = f'{self.current_app.config["REDIS_KEY_PREFIX"]}:Page:Cache:{key}' if not is_full_key else key
+        redis_key: str = f'{self.redis_key}:Page:Cache:{key}' if not is_full_key else key
         is_ok, text = self.cache(redis_key)
         if not is_ok or text is None:
             return None
