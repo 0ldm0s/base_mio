@@ -2,8 +2,7 @@
 PYENV_ROOT="/usr/local/.pyenv"
 PYTHON_ROOT="$PYENV_ROOT/shims"
 cd $(dirname $0)
-${PYTHON_ROOT}/pip install -U -r requirements.txt
-bash compileall.sh
-#work_path=$(pwd)
+work_path=$(pwd)
+mkdir -p "${work_path}/logs"
+ulimit -n 512000
 ${PYTHON_ROOT}/circusd --daemon circus.ini
-#circusd circus.ini
