@@ -5,6 +5,8 @@ mkdir -p /run/${2}/
 chown -R ${1}:${1} /run/${2}/
 EOF
 chmod +x /usr/local/www/${1}/${2}/init_system.sh
+mkdir -p /usr/local/www/${1}/${2}/logs
+chown -R ${1}:${1} /usr/local/www/${1}/${2}/logs
 cat > /lib/systemd/system/${2}.service <<-EOF
 [Unit]
 Description=${2}
@@ -17,9 +19,10 @@ LimitNOFILE=infinity
 LimitFSIZE=infinity
 LimitCPU=infinity
 LimitAS=infinity
+StandardOutput=file:/usr/local/www/${1}/${2}/logs/www.log
 ExecStartPre=+/usr/local/www/${1}/${2}/init_system.sh
 ExecStart=/usr/local/www/${1}/${2}/run_webserver.sh
-ExecStop=/usr/local/www/${1}/${2}/stop_webserver.linux ${2}
+ExecStop=/usr/local/www/${1}/${2}/stop_webserver.sh
 
 [Install]
 WantedBy=multi-user.target
