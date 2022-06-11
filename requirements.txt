@@ -21,3 +21,4 @@ zstandard
 simplejson
 markdown
 python-snappy
+cryptography
