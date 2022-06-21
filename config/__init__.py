@@ -19,6 +19,7 @@ class Config:
     MAIL_SERVER = os.environ.get('MIO_MAIL_SERVER', 'localhost')
     MAIL_PORT = os.environ.get('MIO_MAIL_PORT', 25)
     MAIL_USE_TLS = os.environ.get('MIO_MAIL_USE_TLS', False)
+    MAIL_USE_SSL = os.environ.get('MIO_MAIL_USE_SSL', False)
     MAIL_USERNAME = os.environ.get('MIO_MAIL_USERNAME', '')
     MAIL_PASSWORD = os.environ.get('MIO_MAIL_PASSWORD', '')
     # 是否使用MONGODB
