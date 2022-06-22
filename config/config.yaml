@@ -2,9 +2,5 @@ blueprint:
   - main:
       class: web.main
 config:
-  login_manager:
-    enable: false
-    session_protection: strong
-    login_view: main.login
   csrf:
     enable: false

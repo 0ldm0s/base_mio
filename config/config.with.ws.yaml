@@ -6,9 +6,5 @@ websocket:
       class: web.main.websocket
       path: /websocket
 config:
-  login_manager:
-    enable: false
-    session_protection: strong
-    login_view: main.login
   csrf:
     enable: false
