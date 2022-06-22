@@ -10,15 +10,15 @@ class ApiResponse(object):
     description: str
     data: Any
 
-    def __init__(self, code: int, description: Optional[str] = None, data: Any = ''):
+    def __init__(self, code: int, description: Optional[str] = None, data: Any = ""):
         self.code = code
-        description = u'操作完成' if description is None else str(description).strip()
+        description = "Finished" if description is None else str(description).strip()
         self.description = description
         self.data = data
 
     def to_dict(self) -> Dict[str, Any]:
         if self.data is None:
-            self.data = ''
+            self.data = ""
         static_type_list = [str, int, float, dict, list]
         is_clazz = True
         for static_type in static_type_list:
@@ -32,15 +32,16 @@ class ApiResponse(object):
             clazz = self.data
             data = clazz.to_dict()
         jd: Dict[str, Any] = {
-            'code': self.code,
-            'description': self.description,
-            'data': data
+            "code": self.code,
+            "description": self.description,
+            "data": data
         }
         return jd
 
     def to_jsonify(self) -> Response:
         headers: Dict[str, str] = {
-            'content-type': 'application/json'
+            "content-type": "application/json",
+            "X-Content-Type-Options": "nosniff"
         }
         respone: Response = make_response(json.dumps(self.to_dict()))
         respone.headers = headers
