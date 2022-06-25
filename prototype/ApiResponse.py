@@ -39,10 +39,12 @@ class ApiResponse(object):
         return jd
 
     def to_jsonify(self) -> Response:
+        # if you set X-Content-Type-Options in lighttpd or other web server
+        # you must be remove this
         headers: Dict[str, str] = {
             "content-type": "application/json",
             "X-Content-Type-Options": "nosniff"
         }
         respone: Response = make_response(json.dumps(self.to_dict()))
-        respone.headers = headers
+        respone.headers.update(headers)
         return respone
