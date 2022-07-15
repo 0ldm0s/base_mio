@@ -45,6 +45,4 @@ class ApiResponse(object):
             "content-type": "application/json",
             "X-Content-Type-Options": "nosniff"
         }
-        respone: Response = make_response(json.dumps(self.to_dict()))
-        respone.headers.update(headers)
-        return respone
+        return json.dumps(self.to_dict()), 200, headers
