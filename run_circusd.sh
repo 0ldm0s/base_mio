@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 PYENV_ROOT="/usr/local/.pyenv"
 PYTHON_ROOT="$PYENV_ROOT/shims"
 cd $(dirname $0)

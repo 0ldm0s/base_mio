@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 export MIO_CONFIG="production"
 export MIO_PORT=8000
 PYENV_ROOT="/usr/local/.pyenv"
