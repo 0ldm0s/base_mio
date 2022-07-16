@@ -12,7 +12,6 @@ flask-mail
 flask-caching
 daiquiri
 fleming
-uvloop
 python-dateutil
 celery
 asgiref
