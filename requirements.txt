@@ -1,5 +1,6 @@
 tornado
 pyyaml
+redis[hiredis]
 flask
 click
 flask-bcrypt
