@@ -8,7 +8,7 @@ from mio.util.Logs import LogHandler
 
 
 class JwtHelper(object):
-    VERSION = '0.1'
+    VERSION = '0.2'
     ALGORITHM: str = "HS256"
     PRIVATE_KEY: Optional[str] = None
     PUBLIC_KEY: Optional[str] = None
@@ -74,7 +74,7 @@ class JwtHelper(object):
             console_log.error(e)
             return None
 
-    def get_info(self) -> Optional[Dict[str, Any]]:
+    def get_jwt_info(self) -> Optional[Dict[str, Any]]:
         console_log = self.__get_logger__(inspect.stack()[0].function)
         authorization: str = get_variable_from_request("Authorization", method="header", force_str=True)
         if len(authorization) == 0:
