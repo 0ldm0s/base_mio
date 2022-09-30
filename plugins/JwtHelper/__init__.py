@@ -8,7 +8,7 @@ from mio.util.Logs import LogHandler
 
 
 class JwtHelper(object):
-    VERSION = '0.2'
+    VERSION = "0.2"
     ALGORITHM: str = "HS256"
     PRIVATE_KEY: Optional[str] = None
     PUBLIC_KEY: Optional[str] = None
@@ -24,10 +24,10 @@ class JwtHelper(object):
     ):
         if algorithm == "RS256":
             if private_key is None or public_key is None:
-                from mio.util.KeyBot import KeyBot
+                from mio.util.KeyBot.rsa import Rsa
                 key_path: str = os.path.join(get_root_path(), "jwt_key")
                 # 注意：默认长度是2048，因此建议在启动之前，先运行一个cli来生成密钥对或是把生成好的秘钥对直接放进去
-                key_bot = KeyBot(key_path)
+                key_bot = Rsa(key_path)
                 public_key = key_bot.get_base64_pubkey()
                 private_key = key_bot.get_base64_privkey()
                 if public_key is None or private_key is None:
@@ -46,7 +46,7 @@ class JwtHelper(object):
                 raise "private key can not be null."
             self.PRIVATE_KEY = private_key
         else:
-            raise 'algorithm must be "HS256" or "RS256".'
+            raise "algorithm must be "HS256" or "RS256"."
         self.ALGORITHM = algorithm
         self.VERIFY_EXP = verify_exp
 

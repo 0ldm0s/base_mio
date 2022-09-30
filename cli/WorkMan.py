@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
-# from numba import jit
 import sys
+import inspect
+from mio.util.Logs import LogHandler
 
 
 class Daemon(object):
-    # @jit(forceobj=True)
+    def __get_logger__(self, name: str) -> LogHandler:
+        name = f"{self.__class__.__name__}.{name}"
+        return LogHandler(name)
+
     def hello(self, app, kwargs):
+        id(app), id(kwargs)
+        console_log: LogHandler = self.__get_logger__(inspect.stack()[0].function)
         sys_ver = sys.version
-        print("Powered by PyMio.\nPython: {}".format(sys_ver))
-        pass
+        console_log.info(f"Powered by PyMio.\nPython: {sys_ver}")

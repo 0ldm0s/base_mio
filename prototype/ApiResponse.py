@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import orjson as json
-from flask import make_response
 from flask.wrappers import Response
 from typing import Any, Optional, Dict
 
