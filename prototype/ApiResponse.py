@@ -44,4 +44,4 @@ class ApiResponse(object):
             "content-type": "application/json",
             "X-Content-Type-Options": "nosniff"
         }
-        return json.dumps(self.to_dict()), 200, headers
+        return json.dumps(self.to_dict()).decode("UTF-8"), 200, headers
