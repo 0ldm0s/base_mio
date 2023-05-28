@@ -1,7 +1,7 @@
 tornado
 pyyaml
 redis[hiredis]
-flask
+flask<2.3
 click
 flask-bcrypt
 flask-babel
