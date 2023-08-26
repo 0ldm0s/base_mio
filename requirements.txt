@@ -13,6 +13,7 @@ flask-redis
 flask-mail
 flask-caching
 flask-debugtoolbar
+mongoengine
 daiquiri
 fleming
 uvloop
@@ -24,3 +25,4 @@ orjson
 markdown
 python-snappy
 cryptography
+celery-aio-pool
