@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+from urllib.parse import quote_plus
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 MIO_HOST = os.environ.get("MIO_HOST", "127.0.0.1")
@@ -24,6 +25,8 @@ class Config:
     MAIL_PASSWORD = os.environ.get("MIO_MAIL_PASSWORD", "")
     # 是否使用MONGODB
     MONGODB_ENABLE = os.environ.get("MIO_MONGODB_ENABLE", False)
+    # 是否使用关系型数据库
+    RDBMS_ENABLE = os.environ.get("MIO_RDBMS_ENABLE", False)
     # 是否使用CELERY
     CELERY_ENABLE = os.environ.get("MIO_CELERY_ENABLE", False)
     # 是否使用Redis
@@ -50,13 +53,22 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    MONGODB_USER = "admin"
+    MONGODB_PASSWORD = "password"
+    MONGODB_HOST = "localhost"
+    MONGODB_DB = "dbname"
     MONGODB_SETTINGS = {
-        "db": "db_name",
-        "host": "localhost",
-        "username": "username",
-        "password": "password",
+        "host": "mongodb://{user}:{password}@{host}/{db}?compressors=zstd".format(
+            user=quote_plus(MONGODB_USER), password=quote_plus(MONGODB_PASSWORD), host=MONGODB_HOST, db=MONGODB_DB),
         "connect": False
     }
+    SQLALCHEMY_DATABASE_USER = "admin"
+    SQLALCHEMY_DATABASE_PASSWORD = "password"
+    SQLALCHEMY_DATABASE_HOST = "localhost:5432"
+    SQLALCHEMY_DATABASE_DB = "dbname"
+    SQLALCHEMY_DATABASE_URI = "postgresql+pg8000://{user}:{password}@{host}/{db}".format(
+        user=quote_plus(SQLALCHEMY_DATABASE_USER), password=quote_plus(SQLALCHEMY_DATABASE_PASSWORD),
+        host=SQLALCHEMY_DATABASE_HOST, db=SQLALCHEMY_DATABASE_DB)
     REDIS_URL = "redis://localhost:6379/0"
     CACHE_TYPE = "simple"
     CACHE_REDIS_URL = REDIS_URL
@@ -66,13 +78,22 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
+    MONGODB_USER = "admin"
+    MONGODB_PASSWORD = "password"
+    MONGODB_HOST = "localhost"
+    MONGODB_DB = "dbname"
     MONGODB_SETTINGS = {
-        "db": "db_name",
-        "host": "localhost",
-        "username": "username",
-        "password": "password",
+        "host": "mongodb://{user}:{password}@{host}/{db}?compressors=zstd".format(
+            user=quote_plus(MONGODB_USER), password=quote_plus(MONGODB_PASSWORD), host=MONGODB_HOST, db=MONGODB_DB),
         "connect": False
     }
+    SQLALCHEMY_DATABASE_USER = "admin"
+    SQLALCHEMY_DATABASE_PASSWORD = "password"
+    SQLALCHEMY_DATABASE_HOST = "localhost:5432"
+    SQLALCHEMY_DATABASE_DB = "dbname"
+    SQLALCHEMY_DATABASE_URI = "postgresql+pg8000://{user}:{password}@{host}/{db}".format(
+        user=quote_plus(SQLALCHEMY_DATABASE_USER), password=quote_plus(SQLALCHEMY_DATABASE_PASSWORD),
+        host=SQLALCHEMY_DATABASE_HOST, db=SQLALCHEMY_DATABASE_DB)
     REDIS_URL = "redis://localhost:6379/0"
     CACHE_TYPE = "simple"
     CACHE_REDIS_URL = REDIS_URL
@@ -81,13 +102,22 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
+    MONGODB_USER = "admin"
+    MONGODB_PASSWORD = "password"
+    MONGODB_HOST = "localhost"
+    MONGODB_DB = "dbname"
     MONGODB_SETTINGS = {
-        "db": "db_name",
-        "host": "localhost",
-        "username": "username",
-        "password": "password",
+        "host": "mongodb://{user}:{password}@{host}/{db}?compressors=zstd".format(
+            user=quote_plus(MONGODB_USER), password=quote_plus(MONGODB_PASSWORD), host=MONGODB_HOST, db=MONGODB_DB),
         "connect": False
     }
+    SQLALCHEMY_DATABASE_USER = "admin"
+    SQLALCHEMY_DATABASE_PASSWORD = "password"
+    SQLALCHEMY_DATABASE_HOST = "localhost:5432"
+    SQLALCHEMY_DATABASE_DB = "dbname"
+    SQLALCHEMY_DATABASE_URI = "postgresql+pg8000://{user}:{password}@{host}/{db}".format(
+        user=quote_plus(SQLALCHEMY_DATABASE_USER), password=quote_plus(SQLALCHEMY_DATABASE_PASSWORD),
+        host=SQLALCHEMY_DATABASE_HOST, db=SQLALCHEMY_DATABASE_DB)
     REDIS_URL = "redis://localhost:6379/0"
     CACHE_TYPE = "simple"
     CACHE_REDIS_URL = REDIS_URL
