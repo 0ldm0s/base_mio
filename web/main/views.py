@@ -12,9 +12,9 @@ console_log = LogHandler("view")
 
 
 @main.app_template_filter("get_local_text")
-def get_local_text(text: str, lang: Optional[str] = None):
+def get_local_text(txt: str, lang: Optional[str] = None):
     tt = I18n(lang)
-    return tt.get_text(text)
+    return tt.get_text(txt)
 
 
 @main.route("/favicon.ico")
@@ -32,3 +32,8 @@ def index():
 @main.route("/client.cfm")
 def client_page():
     return render_template("client.html")
+
+
+@main.route("/flask_client.cfm")
+def flask_client_page():
+    return render_template("flask_client.html")

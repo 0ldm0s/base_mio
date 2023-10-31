@@ -12,6 +12,8 @@ flask-cors
 flask-redis
 flask-mail
 flask-caching
+flask-socketio
+gevent-websocket
 flask-debugtoolbar
 sqlalchemy
 flask-sqlalchemy
@@ -29,3 +31,4 @@ markdown
 python-snappy
 cryptography
 celery-aio-pool
+gevent

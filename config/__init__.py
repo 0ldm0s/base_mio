@@ -23,6 +23,8 @@ class Config:
     MAIL_USE_SSL = os.environ.get("MIO_MAIL_USE_SSL", False)
     MAIL_USERNAME = os.environ.get("MIO_MAIL_USERNAME", "")
     MAIL_PASSWORD = os.environ.get("MIO_MAIL_PASSWORD", "")
+    # 是否使用SOCKETIO
+    MIO_SOCKETIO = os.environ.get("MIO_SOCKETIO", False)
     # 是否使用MONGODB
     MONGODB_ENABLE = os.environ.get("MIO_MONGODB_ENABLE", False)
     # 是否使用关系型数据库
