@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 export PYTHONIOENCODING=utf-8
 find . -name "*.pyc" | xargs rm -f
 python -m compileall .

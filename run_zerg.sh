@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 PYENV_ROOT="/usr/local/.pyenv"
 PYTHON_ROOT="$PYENV_ROOT/shims"
 UWSGI_NUM_PROCESSES=`grep -c ^processor /proc/cpuinfo`

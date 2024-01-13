@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 PYENV_ROOT="/opt/.pyenv"
 PYTHON_ROOT="$PYENV_ROOT/shims"
 EXECUTION="cli.WorkMan.Daemon.hello"
