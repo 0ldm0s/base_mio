@@ -60,7 +60,7 @@ class DevelopmentConfig(Config):
     MONGODB_HOST = "localhost"
     MONGODB_DB = "dbname"
     MONGODB_SETTINGS = {
-        "host": "mongodb://{user}:{password}@{host}/{db}?compressors=zstd".format(
+        "host": "mongodb://{user}:{password}@{host}/{db}?directConnection=true&compressors=zstd".format(
             user=quote_plus(MONGODB_USER), password=quote_plus(MONGODB_PASSWORD), host=MONGODB_HOST, db=MONGODB_DB),
         "connect": False
     }
@@ -85,7 +85,7 @@ class TestingConfig(Config):
     MONGODB_HOST = "localhost"
     MONGODB_DB = "dbname"
     MONGODB_SETTINGS = {
-        "host": "mongodb://{user}:{password}@{host}/{db}?compressors=zstd".format(
+        "host": "mongodb://{user}:{password}@{host}/{db}?directConnection=true&compressors=zstd".format(
             user=quote_plus(MONGODB_USER), password=quote_plus(MONGODB_PASSWORD), host=MONGODB_HOST, db=MONGODB_DB),
         "connect": False
     }
@@ -109,7 +109,7 @@ class ProductionConfig(Config):
     MONGODB_HOST = "localhost"
     MONGODB_DB = "dbname"
     MONGODB_SETTINGS = {
-        "host": "mongodb://{user}:{password}@{host}/{db}?compressors=zstd".format(
+        "host": "mongodb://{user}:{password}@{host}/{db}?directConnection=true&compressors=zstd".format(
             user=quote_plus(MONGODB_USER), password=quote_plus(MONGODB_PASSWORD), host=MONGODB_HOST, db=MONGODB_DB),
         "connect": False
     }
