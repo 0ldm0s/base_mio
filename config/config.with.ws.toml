@@ -1,0 +1,11 @@
+[[blueprint]]
+[blueprint.main]
+class = "web.main"
+
+[[websocket]]
+[websocket.WSHandler]
+class = "web.main.websocket"
+path = "/websocket"
+
+[config.csrf]
+enable = false

@@ -6,10 +6,14 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 MIO_HOST = os.environ.get("MIO_HOST", "127.0.0.1")
 MIO_PORT = int(os.environ.get("MIO_PORT", 5050))
 MIO_SITE_HOST = os.environ.get("MIO_SITE_HOST", MIO_HOST)
+MIO_GQL_ADMIN_KEY = "gql:api:admin"
+# 这个默认为当前最新版本，旧版就不在这里定义了
+MIO_GQL_USER_API_KEY = "gql:api:user"
+REDIS_PASSWORD_HASH_KEY = "PlatformUser:PasswordHash:{}"
 
 
 class Config:
-    SECRET_KEY = os.environ.get("SECRET_KEY") or "PYMIO_SECRET_KEY"  # 默认秘钥
+    SECRET_KEY = os.environ.get("SECRET_KEY") or "PNo3leuTFG84Z$1hPWooO1GG4jELL3O1"  # 默认秘钥
     SESSION_TYPE = "filesystem"
     # 邮件系统设置相关
     MIO_MAIL = False
@@ -23,8 +27,6 @@ class Config:
     MAIL_USE_SSL = os.environ.get("MIO_MAIL_USE_SSL", False)
     MAIL_USERNAME = os.environ.get("MIO_MAIL_USERNAME", "")
     MAIL_PASSWORD = os.environ.get("MIO_MAIL_PASSWORD", "")
-    # 是否使用SOCKETIO
-    MIO_SOCKETIO = os.environ.get("MIO_SOCKETIO", False)
     # 是否使用MONGODB
     MONGODB_ENABLE = os.environ.get("MIO_MONGODB_ENABLE", False)
     # 是否使用关系型数据库
@@ -72,7 +74,7 @@ class DevelopmentConfig(Config):
         user=quote_plus(SQLALCHEMY_DATABASE_USER), password=quote_plus(SQLALCHEMY_DATABASE_PASSWORD),
         host=SQLALCHEMY_DATABASE_HOST, db=SQLALCHEMY_DATABASE_DB)
     REDIS_URL = "redis://localhost:6379/0"
-    CACHE_TYPE = "simple"
+    CACHE_TYPE = "RedisCache"
     CACHE_REDIS_URL = REDIS_URL
     CELERY_BROKER_URL = REDIS_URL
     CELERY_BACKEND_URL = REDIS_URL
@@ -97,7 +99,7 @@ class TestingConfig(Config):
         user=quote_plus(SQLALCHEMY_DATABASE_USER), password=quote_plus(SQLALCHEMY_DATABASE_PASSWORD),
         host=SQLALCHEMY_DATABASE_HOST, db=SQLALCHEMY_DATABASE_DB)
     REDIS_URL = "redis://localhost:6379/0"
-    CACHE_TYPE = "simple"
+    CACHE_TYPE = "RedisCache"
     CACHE_REDIS_URL = REDIS_URL
     CELERY_BROKER_URL = REDIS_URL
     CELERY_BACKEND_URL = REDIS_URL
@@ -120,11 +122,11 @@ class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = "postgresql+pg8000://{user}:{password}@{host}/{db}".format(
         user=quote_plus(SQLALCHEMY_DATABASE_USER), password=quote_plus(SQLALCHEMY_DATABASE_PASSWORD),
         host=SQLALCHEMY_DATABASE_HOST, db=SQLALCHEMY_DATABASE_DB)
-    REDIS_URL = "redis://localhost:6379/0"
-    CACHE_TYPE = "simple"
+    REDIS_URL = "unix:///dev/shm/redis.sock?db=0"
+    CACHE_TYPE = "RedisCache"
     CACHE_REDIS_URL = REDIS_URL
-    CELERY_BROKER_URL = REDIS_URL
-    CELERY_BACKEND_URL = REDIS_URL
+    CELERY_BROKER_URL = "redis://localhost:6379/1"
+    CELERY_BACKEND_URL = CELERY_BROKER_URL
 
 
 config = {
