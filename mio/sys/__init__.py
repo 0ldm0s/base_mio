@@ -21,9 +21,9 @@ from typing import Tuple, Optional, List, Union
 from mio.util.Helper import in_dict, is_enable, is_number, get_canonical_os_name
 from mio.util.Logs import LogHandler, LoggerType, nameToLevel
 from mio.sys.json import MioJsonProvider
-from mio.sys.wsgi import MIO_SYSTEM_VERSION
 from mio.sys.flask_mongoengine import MongoEngine
 
+MIO_SYSTEM_VERSION = "1.8.2"
 mail = None
 crypt: Bcrypt = Bcrypt()
 db: Optional[MongoEngine] = None

@@ -1,4 +1,6 @@
 tornado
+grpcio
+grpcio-tools
 rtoml
 redis[hiredis]
 flask
@@ -17,6 +19,7 @@ gevent-websocket
 gevent
 flask-debugtoolbar
 sqlalchemy
+sqlalchemy-utils
 flask-sqlalchemy
 pg8000
 mongoengine
