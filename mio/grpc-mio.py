@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 import os
 import sys
+import codecs
 import grpc
 from concurrent import futures
 from typing import Union
@@ -10,6 +11,8 @@ import grpc_greeter.calculator_pb2_grpc as calculator_pb2_grpc
 from mio.sys import init_timezone, init_uvloop, MIO_SYSTEM_VERSION
 from mio.util.Logs import LogHandler
 
+sys.stdout = codecs.getwriter('utf8')(sys.stdout)
+sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 root_path: str = os.path.abspath(os.path.dirname(__file__) + "/../")
 sys.path.append(root_path)
 

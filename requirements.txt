@@ -1,6 +1,4 @@
 tornado
-grpcio
-grpcio-tools
 rtoml
 redis[hiredis]
 flask
