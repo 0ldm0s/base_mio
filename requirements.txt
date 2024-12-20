@@ -12,7 +12,8 @@ flask-cors
 flask-redis
 flask-mail
 flask-caching
-flask-socketio
+flask-debugtoolbar
+flask-socketio==5.4.1
 gevent-websocket
 gevent
 flask-debugtoolbar
@@ -25,9 +26,15 @@ daiquiri
 fleming
 python-dateutil
 celery
+celery-amqp-backend
 asgiref
 zstandard
 orjson
 markdown
 cryptography
+requests
+python-gql
+graphql-core==3.1.7
+pyzstd
 celery-aio-pool
+paramiko
