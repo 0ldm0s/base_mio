@@ -24,6 +24,7 @@ pg8000
 mongoengine
 daiquiri
 fleming
+uvloop
 python-dateutil
 celery
 celery-amqp-backend
