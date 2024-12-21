@@ -3,6 +3,7 @@ import os
 import pickle
 import inspect
 from flask import Flask
+from redis.client import PubSub
 from typing import Optional, Any, Tuple, List
 from mio.sys import redis_db
 from mio.util.Logs import LogHandler
@@ -10,7 +11,7 @@ from mio.util.Helper import get_root_path, read_txt_file
 
 
 class QuickCache(object):
-    VERSION = "0.2"
+    VERSION = "0.2.1"
     redis_key: str
 
     def __get_logger__(self, name: str) -> LogHandler:
@@ -169,3 +170,22 @@ class QuickCache(object):
         # 刷新缓存
         self.cache(redis_key, text, expiry)
         return text
+
+    def pub(self, channel: str, message: Any) -> bool:
+        console_log = self.__get_logger__(inspect.stack()[0].function)
+        try:
+            redis_db.publish(channel, pickle.dumps(message))
+            return True
+        except Exception as e:
+            console_log.error(e)
+            return False
+
+    def sub(self, channel: str) -> Optional[PubSub]:
+        console_log = self.__get_logger__(inspect.stack()[0].function)
+        try:
+            pubsub = redis_db.pubsub()
+            pubsub.subscribe(channel)
+            return pubsub
+        except Exception as e:
+            console_log.error(e)
+            return None
