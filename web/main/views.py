@@ -18,22 +18,22 @@ def get_local_text(txt: str, lang: Optional[str] = None):
 
 
 @main.route("/favicon.ico")
-def favicon():
+async def favicon():
     return send_from_directory(
         os.path.join(get_root_path(), "web", "static"), "favicon.ico", mimetype="image/vnd.microsoft.icon")
 
 
 @main.route("/")
-def index():
+async def index():
     sys_ver = sys.version
     return render_template("index.html", sys_ver=sys_ver)
 
 
 @main.route("/client.cfm")
-def client_page():
+async def client_page():
     return render_template("client.html")
 
 
 @main.route("/flask_client.cfm")
-def flask_client_page():
+async def flask_client_page():
     return render_template("flask_client.html")

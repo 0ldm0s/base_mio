@@ -1,4 +1,3 @@
-tornado
 rtoml
 redis[hiredis]
 flask
@@ -13,7 +12,6 @@ flask-redis
 flask-mail
 flask-caching
 flask-debugtoolbar
-flask-socketio==5.4.1
 gevent-websocket
 gevent
 flask-debugtoolbar
@@ -34,8 +32,5 @@ orjson
 markdown
 cryptography
 requests
-python-gql
-graphql-core==3.1.7
 pyzstd
-celery-aio-pool
 paramiko
