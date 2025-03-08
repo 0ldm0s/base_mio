@@ -162,7 +162,12 @@ def create_app(
             app.register_blueprint(bp, url_prefix=blueprint[key]["url_prefix"])
         else:
             app.register_blueprint(bp)
-    # 移除废弃的WebSocket配置逻辑
+
+    @app.after_request
+    def server_headers(response):
+        response.headers["server"] = f"PyMIO/{MIO_SYSTEM_VERSION}"
+        return response
+
     return app, console
 
 

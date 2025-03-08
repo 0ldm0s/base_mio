@@ -87,8 +87,8 @@ if __name__ == "__main__":
                 config.worker_class = "uvloop"
             config.workers = MIO_LIMIT_CPU if MIO_LIMIT_CPU > 1 else 1
             config.loglevel = "debug" if MIO_CONFIG != "production" else "warning"
+            config.include_server_header = False
             config.accesslog = "-"
-            # config.access_log_format = '%h %r %s %b "%(Referer)i" "%(UserAgent)i"'
             config.access_log_format = (
                 '%(h)s(%(X-Forwarded-For)s) %(r)s %(s)s %(b)s "%(f)s" "%(a)s"'  # 注意变量名规范
             )
