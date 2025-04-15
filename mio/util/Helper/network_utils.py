@@ -8,7 +8,7 @@ from typing import Any, Optional, List
 
 
 def get_real_ip(
-        idx: int = 0, show_all: bool = False, ipv6only: bool = True, console_log=None
+        idx: int = 0, show_all: bool = False, ipv6only: bool = False, console_log=None
 ) -> str:
     real_ip: str = ""
     if "HTTP_CF_CONNECTING_IP" in request.environ:
@@ -31,7 +31,7 @@ def get_real_ip(
         real_ip = request.environ["HTTP_X_FORWARDED_FOR"]
     else:
         real_ip = request.environ["REMOTE_ADDR"]
-    if "," in real_ip and not show_all:
+    if "," in real_ip and show_all:
         try:
             _tmp_: List[str] = real_ip.split(",")
             real_ip = _tmp_[idx].strip()
@@ -119,6 +119,49 @@ def get_variable_from_request(
         return word
     return str(word).strip()
 
+
+def traceroute(host: str, max_hops: int = 30) -> dict:
+    """执行路由追踪"""
+    import socket
+    result = {}
+    try:
+        if platform.system() == "Windows":
+            cmd = ["tracert", "-h", str(max_hops), "-w", "1000", host]
+        else:
+            cmd = ["traceroute", "-m", str(max_hops), "-w", "1", host]
+            
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT, timeout=60).decode()
+        
+        for line in output.splitlines():
+            if "ms" in line:
+                parts = line.split()
+                hop = int(parts[0])
+                ips = [p for p in parts if p.count('.') == 3]
+                if ips:
+                    result[hop] = ips[0]
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+        pass
+    except socket.gaierror:
+        print(f"无法解析主机: {host}")
+    return result
+
+def network_latency_test(host: str, port: int = 80) -> float:
+    """网络延迟测试"""
+    try:
+        if platform.system() == "Windows":
+            cmd = ["ping", "-n", "4", host]
+        else:
+            cmd = ["ping", "-c", "4", host]
+            
+        output = subprocess.check_output(cmd, stderr=subprocess.STDOUT).decode()
+        
+        if "time=" in output:
+            times = [float(t.split('=')[-1].replace('ms', ''))
+                    for t in output.split() if 'time=' in t]
+            return sum(times)/len(times)
+    except subprocess.CalledProcessError:
+        pass
+    return -1.0
 
 def process_bar(num, total):
     rate = float(num) / total

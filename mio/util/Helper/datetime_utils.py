@@ -154,3 +154,21 @@ def microtime(get_as_float=False, max_ms_lan: int = 6, hours: int = 0, minutes: 
         return str(dt)
     else:
         return "%.8f %d" % (ms, t)
+
+
+def add_months(timestamp: int, months: int) -> int:
+    """根据时间戳和月份数计算新日期的时间戳
+    
+    Args:
+        timestamp: 原始时间戳(秒)
+        months: 要增加的月数(可为负)
+        
+    Returns:
+        计算后的时间戳(秒)，出错返回0
+    """
+    try:
+        dt = datetime.fromtimestamp(timestamp)
+        new_dt = dt + relativedelta(months=months)
+        return int(time.mktime(new_dt.timetuple()))
+    except Exception as e:
+        return 0
